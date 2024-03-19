@@ -238,11 +238,6 @@ CLASS zcl_wasm_memory IMPLEMENTATION.
     DATA lv_last TYPE i.
     lv_last = lines( mt_frames ).
     READ TABLE mt_frames INDEX lv_last INTO ri_frame.
-    "##feature-start=debug
-    IF sy-subrc <> 0.
-      RAISE EXCEPTION TYPE zcx_wasm EXPORTING text = 'zcl_wasm_memory: no frames, get'.
-    ENDIF.
-    "##feature-end=debug
   ENDMETHOD.
 
   METHOD get_linear.

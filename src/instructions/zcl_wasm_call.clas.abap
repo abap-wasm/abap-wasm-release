@@ -107,14 +107,6 @@ CLASS zcl_wasm_call IMPLEMENTATION.
         DATA(lv_offset) = xstrlen( ls_type-result_types ) - sy-index.
         DATA(li_val) = io_memory->mi_stack->pop( ).
 
-        "##feature-start=debug
-        IF li_val->get_type( ) <> ls_type-result_types+lv_offset(1).
-          RAISE EXCEPTION TYPE zcx_wasm
-            EXPORTING
-              text = |call result: wrong parameter on stack, got { li_val->get_type( ) } expected { ls_type-result_types+lv_offset(1) }|.
-        ENDIF.
-        "##feature-end=debug
-
         INSERT li_val INTO lt_results INDEX 1.
       ENDDO.
 
