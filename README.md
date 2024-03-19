@@ -1,2 +1,2 @@
 # abap-wasm-release
-No PRs in this repository please
+Mirror, no PRs + issues in this repository please
