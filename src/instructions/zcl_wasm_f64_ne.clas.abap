@@ -19,7 +19,16 @@ CLASS zcl_wasm_f64_ne IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD zif_wasm_instruction~execute.
-    zcl_wasm_f64=>ne( io_memory ).
+
+    DATA(lo_val1) = CAST zcl_wasm_f64( io_memory->mi_stack->pop( ) ).
+    DATA(lo_val2) = CAST zcl_wasm_f64( io_memory->mi_stack->pop( ) ).
+
+    DATA(lv_result) = 0.
+    IF lo_val1->mv_value <> lo_val2->mv_value.
+      lv_result = 1.
+    ENDIF.
+
+    io_memory->mi_stack->push( zcl_wasm_i32=>from_signed( lv_result ) ).
   ENDMETHOD.
 
 ENDCLASS.
