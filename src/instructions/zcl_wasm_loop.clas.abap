@@ -36,10 +36,6 @@ CLASS zcl_wasm_loop IMPLEMENTATION.
         ev_last_opcode  = DATA(lv_last_opcode)
         et_instructions = DATA(lt_instructions) ).
 
-    IF lv_last_opcode <> zif_wasm_opcodes=>c_opcodes-end.
-      RAISE EXCEPTION TYPE zcx_wasm EXPORTING text = 'loop: expected end opcode'.
-    ENDIF.
-
     ri_instruction = NEW zcl_wasm_loop(
       iv_block_type = lv_block_type
       it_in         = lt_instructions ).
