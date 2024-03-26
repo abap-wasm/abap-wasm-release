@@ -95,20 +95,9 @@ CLASS zcl_wasm_memory_linear IMPLEMENTATION.
 * value is not required, plus the CONCATENATE can be replaced with direct writing into the CHANGING
     DATA lv_byte TYPE x LENGTH 1.
 
-    IF iv_length <= 0.
-      RAISE EXCEPTION TYPE zcx_wasm EXPORTING text = 'linear_get: negative or zero length'.
-    ELSEIF iv_offset < 0.
-      RAISE EXCEPTION TYPE zcx_wasm EXPORTING text = 'linear_get: negative offset'.
-    ENDIF.
-
     DATA(lv_page) = iv_offset DIV zif_wasm_memory_linear=>c_page_size.
     lv_page = lv_page + 1.
     READ TABLE mt_pages INDEX lv_page REFERENCE INTO gv_page.
-    IF sy-subrc <> 0.
-      RAISE EXCEPTION TYPE zcx_wasm
-        EXPORTING
-          text = |linear_get: out of bounds, getting page { lv_page }, { iv_offset }|.
-    ENDIF.
 
     DATA(lv_offset) = iv_offset MOD zif_wasm_memory_linear=>c_page_size.
 
@@ -117,11 +106,6 @@ CLASS zcl_wasm_memory_linear IMPLEMENTATION.
       IF lv_offset = zif_wasm_memory_linear=>c_page_size.
         lv_page = lv_page + 1.
         READ TABLE mt_pages INDEX lv_page REFERENCE INTO gv_page.
-        IF sy-subrc <> 0.
-          RAISE EXCEPTION TYPE zcx_wasm
-            EXPORTING
-              text = |linear_get: out of bounds, getting page { lv_page }|.
-        ENDIF.
         lv_offset = 0.
       ENDIF.
 
