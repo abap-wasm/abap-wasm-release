@@ -235,9 +235,6 @@ CLASS zcl_wasm_memory IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD get_linear.
-    IF mi_linear IS INITIAL.
-      RAISE EXCEPTION TYPE zcx_wasm EXPORTING text = 'zcl_wasm_memory: no linear memory'.
-    ENDIF.
 
     ri_linear = mi_linear.
   ENDMETHOD.
