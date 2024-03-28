@@ -45,7 +45,7 @@ CLASS zcl_wasm_f32_load IMPLEMENTATION.
 
     DATA(lv_i) = CAST zcl_wasm_i32( li_value )->mv_value.
 
-    lv_hex = io_memory->get_linear( )->get(
+    lv_hex = io_memory->mi_linear->get(
       iv_length = lc_length
       iv_align  = mv_align
       iv_offset = mv_offset + lv_i ).

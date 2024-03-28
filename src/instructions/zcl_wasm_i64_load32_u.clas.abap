@@ -42,7 +42,7 @@ CLASS zcl_wasm_i64_load32_u IMPLEMENTATION.
 
     DATA(lv_i) = io_memory->mi_stack->pop_i32( )->mv_value.
 
-    lv_hex4 = io_memory->get_linear( )->get(
+    lv_hex4 = io_memory->mi_linear->get(
       iv_length = lc_length
       iv_align  = mv_align
       iv_offset = mv_offset + lv_i ).

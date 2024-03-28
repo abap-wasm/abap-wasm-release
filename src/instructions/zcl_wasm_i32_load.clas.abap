@@ -44,7 +44,7 @@ CLASS zcl_wasm_i32_load IMPLEMENTATION.
   METHOD zif_wasm_instruction~execute.
     gv_i = io_memory->mi_stack->pop_i32( )->mv_value.
 
-    gv_hex = io_memory->get_linear( )->get(
+    gv_hex = io_memory->mi_linear->get(
       iv_length = gc_length
       iv_align  = mv_align
       iv_offset = mv_offset + gv_i ).
