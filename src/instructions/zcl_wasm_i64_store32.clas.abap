@@ -22,9 +22,6 @@ ENDCLASS.
 CLASS zcl_wasm_i64_store32 IMPLEMENTATION.
 
   METHOD constructor.
-    IF iv_align > zcl_wasm_memory=>c_alignment_32bit.
-      RAISE EXCEPTION TYPE zcx_wasm EXPORTING text = 'alignment must not be larger than natural'.
-    ENDIF.
 
     mv_align  = iv_align.
     mv_offset = iv_offset.
@@ -44,14 +41,8 @@ CLASS zcl_wasm_i64_store32 IMPLEMENTATION.
     DATA(li_linear) = io_memory->get_linear( ).
 
     DATA(lv_c) = io_memory->mi_stack->pop( ).
-    IF lv_c->get_type( ) <> zif_wasm_types=>c_value_type-i64.
-      RAISE EXCEPTION TYPE zcx_wasm EXPORTING text = 'i64 store32: expected i64'.
-    ENDIF.
 
     DATA(lv_i) = io_memory->mi_stack->pop_i32( )->mv_value.
-    IF lv_i < 0.
-      RAISE EXCEPTION TYPE zcx_wasm EXPORTING text = 'i64 store32: out of bounds'.
-    ENDIF.
 
     lv_hex = CAST zcl_wasm_i64( lv_c )->get_signed( ).
 

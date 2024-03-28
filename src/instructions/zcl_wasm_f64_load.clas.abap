@@ -22,9 +22,6 @@ ENDCLASS.
 CLASS zcl_wasm_f64_load IMPLEMENTATION.
 
   METHOD constructor.
-    IF iv_align > zcl_wasm_memory=>c_alignment_64bit.
-      RAISE EXCEPTION TYPE zcx_wasm EXPORTING text = 'alignment must not be larger than natural'.
-    ENDIF.
 
     mv_align  = iv_align.
     mv_offset = iv_offset.
@@ -43,9 +40,6 @@ CLASS zcl_wasm_f64_load IMPLEMENTATION.
     DATA lv_int TYPE i.
 
     DATA(lv_i) = io_memory->mi_stack->pop_i32( )->mv_value.
-    IF lv_i < 0.
-      RAISE EXCEPTION TYPE zcx_wasm EXPORTING text = 'zcl_wasm_f64_load: out of bounds'.
-    ENDIF.
 
     lv_hex = io_memory->get_linear( )->get(
       iv_length = lc_length
