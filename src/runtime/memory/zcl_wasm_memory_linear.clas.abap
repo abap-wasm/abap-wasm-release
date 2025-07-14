@@ -91,11 +91,13 @@ CLASS zcl_wasm_memory_linear IMPLEMENTATION.
 
     DATA(lv_offset) = iv_offset MOD c_page_size.
 
+    ASSIGN gv_page->* TO FIELD-SYMBOL(<lv_page>).
+
     IF lv_offset + lv_length <= c_page_size.
-      gv_page->*+lv_offset(lv_length) = iv_bytes.
+      <lv_page>+lv_offset(lv_length) = iv_bytes.
     ELSE.
       DATA(lv_written) = c_page_size - lv_offset.
-      gv_page->*+lv_offset(lv_written) = iv_bytes(lv_written).
+      <lv_page>+lv_offset(lv_written) = iv_bytes(lv_written).
 
       WHILE lv_written < lv_length.
         lv_page = lv_page + 1.
@@ -104,7 +106,7 @@ CLASS zcl_wasm_memory_linear IMPLEMENTATION.
         lv_length = nmin(
           val1 = lv_length
           val2 = c_page_size ).
-        gv_page->*(lv_length) = iv_bytes+lv_written(lv_length).
+        <lv_page>(lv_length) = iv_bytes+lv_written(lv_length).
         lv_written = lv_written + lv_length.
       ENDWHILE.
     ENDIF.
